@@ -1,6 +1,122 @@
 //package StackQueueLinkedList;
 import java.util.Scanner;
 
+package StackQueueLinkedList;
+import java.util.Scanner;
+
+class Main
+
+{
+    public static void main(String[]args)
+    {
+        StackByLinkedList sll=new StackByLinkedList();
+        QueueByDoubleLinkedList qll=new QueueByDoubleLinkedList();
+        Scanner sc=new Scanner(System.in);
+        while(true)
+        {   
+            System.out.println("Which Data Structure do you need?");
+            System.out.println("1.Stack :) 2.Queue :) 3. Exit :(");
+            int choose=sc.nextInt();
+            if (choose == 3) {
+                System.out.println("Exiting Program...");
+                break;
+            }
+            boolean CHANGE_DS=true;
+            while(CHANGE_DS)
+            {
+            switch(choose)
+            {
+                case 1:
+
+                        System.out.println("What Operations Do you want to perform on Stack?");
+                        System.out.println("1.Insertion at Front :)");
+                        System.out.println("2.Deletion at Front :(");
+                        System.out.println("3.Finding out peek? :)");
+                        System.out.println("4.Display List :)");
+                        System.out.println("5.Go to main MENU :)");
+                        int stackOP=sc.nextInt();
+                    switch(stackOP)
+                    {
+                        case 1:
+                                System.out.print("Enter the data to Insert:");
+                                int data=sc.nextInt();
+                                sll.head=sll.insertionAtFront(data,sll.head);
+                                break;
+                        case 2:
+                                
+                                sll.head=sll.deletionAtFront(sll.head);
+                                break;
+                        case 3:
+                                sll.head=sll.peek(sll.head);
+                                break;
+                        case 4:
+                                System.out.println("The Present List is as:");
+                                sll.display(sll.head);
+                                break;
+                        case 5:
+                                CHANGE_DS=false;  
+                                break;
+                        default:
+                                System.out.print("Exiting...");
+                                System.out.println("Invalid Options");
+                                CHANGE_DS=false; 
+                                sc.close();
+                    }
+                break;
+                case 2:
+                        System.out.println("What Operations Do you want to perform on Queue?");
+                        System.out.println("1.Insertion at Front :)");
+                        System.out.println("2.Deletion at End :(");
+                        System.out.println("3.Finding out HEAD? :)");
+                        System.out.println("4.Finding out TAIL? :)");
+                        System.out.println("5.Display List :)");
+                        System.out.println("6.Go to main MENU :)");
+
+                        int queueOP=sc.nextInt();
+                    switch(queueOP)
+                        {
+                            case 1:
+                                    System.out.print("Enter the data to Insert:");
+                                    int data=sc.nextInt();
+                                    qll.head=qll.insertionAtFront(data,qll.head);
+                                    break;
+                            case 2:
+                                    
+                                    qll.tail=qll.deletionAtEnd(qll.tail);
+                                    break;
+                            case 3:
+                                    qll.head=qll.peek(qll.head);
+                                    if(qll.head!=null)
+                                    System.out.println("The HEAD is:"+qll.head.data);
+                                    break;
+                            case 4:
+                                    qll.tail=qll.peek(qll.tail);
+                                    if(qll.tail!=null)
+                                    System.out.println("The TAIL is:"+qll.tail.data);
+                                    break;
+                            case 5:
+                                    System.out.print("The Present List is as:");
+                                    qll.display(qll.head);
+                                    break;
+                            case 6:
+                                    CHANGE_DS=false;  
+                                    break;
+                            default:
+                                    System.out.print("Exiting...");
+                                    System.out.println("Invalid Options");
+                                    CHANGE_DS=false; 
+                                    sc.close();
+                        }
+                break;
+                default:
+                        System.out.print("Exiting....");
+                        System.out.println("Invalid Options");
+                        sc.close();
+            }
+            }            
+        }
+    }
+    }
 class Node
 {
     int data;
@@ -41,9 +157,11 @@ class StackByLinkedList
             System.out.println("No data to Delete :(");
             return head;
         }
-        Node current=head;
-        head=current.next;
-        current=null;
+        if(head!=null)
+        System.out.println("The Element which will be deleted is:"+head.data);
+        head=head.next;
+        
+        
     }
     catch(NullPointerException ne)
     {
@@ -58,6 +176,8 @@ class StackByLinkedList
         {
             System.out.println("No data to peek :(");
         }
+        else
+        System.out.println("The peek is:"+head.data);
         return head;
     }
     public void display(Node head)
@@ -84,7 +204,6 @@ class QueueByDoubleLinkedList
         if(tail==null)
         {
             this.tail=newNode;
-            return tail;
         }
         if(head==null)
         {
@@ -99,16 +218,21 @@ class QueueByDoubleLinkedList
     }
     public Qnode deletionAtEnd(Qnode tail)
     {
-        if (tail == null) {
+        if(tail==null)
+        {
             System.out.println("No data to delete :(");
             return tail;
         }
-        if (tail == head) { // If only one element exists
+        if (tail == head && head!=null) { // If only one element exists
+            System.out.println("The Element which will be deleted is:"+tail.data);
             head = tail = null;
             return tail;
         }
-        tail = tail.previous;
-        tail.next = null;
+      
+            System.out.println("The Element which will be deleted is:"+tail.data);
+            tail = tail.previous;
+            tail.next = null;    
+        
        return tail; 
     }
     public Qnode peek(Qnode head)
@@ -135,114 +259,5 @@ class QueueByDoubleLinkedList
         System.out.println();
     }
 }
-class Main
-{
-    public static void main(String[]args)
-    {
-        StackByLinkedList sll=new StackByLinkedList();
-        QueueByDoubleLinkedList qll=new QueueByDoubleLinkedList();
-        Scanner sc=new Scanner(System.in);
-        while(true)
-        {   
-            System.out.println("Which Data Structure do you need?");
-            System.out.println("1.Stack :) 2.Queue :) 3. Exit :(");
-            int choose=sc.nextInt();
-            if (choose == 3) {
-                System.out.println("Exiting Program...");
-                break;
-            }
-            boolean CHANGE_DS=true;
-            while(CHANGE_DS)
-            {
-            switch(choose)
-            {
-                case 1:
 
-                        System.out.println("What Operations Do you want to perform on Stack?");
-                        System.out.println("1.Insertion at Front :)");
-                        System.out.println("2.Deletion at Front :(");
-                        System.out.println("3.Finding out peek? :)");
-                        System.out.println("4.Display List :)");
-                        System.out.println("5.Go to main MENU :)");
-                        int stackOP=sc.nextInt();
-                    switch(stackOP)
-                    {
-                        case 1:
-                                System.out.print("Enter the data to Insert:");
-                                int data=sc.nextInt();
-                                sll.head=sll.insertionAtFront(data,sll.head);
-                                break;
-                        case 2:
-                                System.out.println("The Element which will be deleted is:"+sll.head.data);
-                                sll.head=sll.deletionAtFront(sll.head);
-                                break;
-                        case 3:
-                                sll.head=sll.peek(sll.head);
-                                System.out.println("The peek is:"+sll.head.data);
-                                break;
-                        case 4:
-                                System.out.println("The Present List is as:");
-                                sll.display(sll.head);
-                                break;
-                        case 5:
-                                CHANGE_DS=false;  
-                                break;
-                        default:
-                                System.out.print("Exiting...");
-                                System.out.println("Invalid Options");
-                                CHANGE_DS=false; 
-                                sc.close();
-                    }
-                break;
-                case 2:
-                        System.out.println("What Operations Do you want to perform on Queue?");
-                        System.out.println("1.Insertion at Front :)");
-                        System.out.println("2.Deletion at End :(");
-                        System.out.println("3.Finding out HEAD? :)");
-                        System.out.println("4.Finding out TAIL? :)");
-                        System.out.println("5.Display List :)");
-                        System.out.println("5.Go to main MENU :)");
 
-                        int queueOP=sc.nextInt();
-                    switch(queueOP)
-                        {
-                            case 1:
-                                    System.out.print("Enter the data to Insert:");
-                                    int data=sc.nextInt();
-                                    qll.head=qll.insertionAtFront(data,qll.head);
-                                    break;
-                            case 2:
-                                    System.out.println("The Element which will be deleted is:"+qll.tail.data);
-                                    qll.tail=qll.deletionAtEnd(qll.tail);
-                                    break;
-                            case 3:
-                                    qll.head=qll.peek(qll.head);
-                                    System.out.println("The HEAD is:"+qll.head.data);
-                                    break;
-                            case 4:
-                                    qll.tail=qll.peek(qll.tail);
-                                    System.out.println("The TAIL is:"+qll.tail.data);
-                                    break;
-                            case 5:
-                                    System.out.print("The Present List is as:");
-                                    qll.display(qll.head);
-                                    break;
-                            case 6:
-                                    CHANGE_DS=false;  
-                                    break;
-                            default:
-                                    System.out.print("Exiting...");
-                                    System.out.println("Invalid Options");
-                                    CHANGE_DS=false; 
-                                    sc.close();
-                        }
-                break;
-                default:
-                        System.out.print("Exiting....");
-                        System.out.println("Invalid Options");
-                        sc.close();
-            }
-            }            
-        }
-    }
-    }
